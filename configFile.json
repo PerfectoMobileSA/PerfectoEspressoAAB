@@ -13,7 +13,7 @@
   ],
   "jobName": "some_job",
   "jobNumber": 1,
-  "branch": "some_branch",
+  "branch": "main",
   "projectName": "My_Espresso_project",
   "projectVersion": "v1.0",
   "tags": [
