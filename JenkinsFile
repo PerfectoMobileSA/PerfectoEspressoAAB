@@ -1,0 +1,41 @@
+import groovy.json.JsonSlurperClassic
+import groovy.json.JsonSlurper
+
+String cloudName = "ps";
+
+pipeline {
+    agent any
+
+    stages{
+        stage("git clone"){
+            steps{
+                git branch: 'main', credentialsId: '0bdcdedb-7875-42a6-901d-ba0d91b507f8', url: 'git@github.com:PerfectoMobileSA/PerfectoEspressoAAB.git'
+            }
+        }
+
+         stage("Prepare builds") {
+            steps{
+                sh ''' chmod +x ./gradlew
+                ./gradlew bundleDebug assembleAndroidTest'''
+            }
+        }
+
+        stage("Prepare universal apk via bundletool"){
+            steps{
+                sh '''pwd
+                java -jar ./bundletool.jar build-apks --bundle=app/build/outputs/bundle/debug/app-debug.aab --output=universal.apks --mode=universal
+                mv universal.apks universal.zip
+                unzip -o universal.zip
+                '''
+            }
+        }
+
+        stage("Run the espresso tests on perfecto"){
+            steps{
+                withCredentials([string(credentialsId: 'psToken', variable: 'securityToken')]) {
+                    sh '''./gradlew perfecto-android-inst -PconfigFileLocation=configFile.json -PsecurityToken=''' + securityToken + ''' -PcloudURL=''' + cloudName + '''.perfectomobile.com '''
+                }
+            }
+        }
+    }
+}

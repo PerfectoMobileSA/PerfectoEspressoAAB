@@ -5,3 +5,6 @@ local.properties
 build
 *.iml
 .DS_Store
+toc.pb
+universal.apk
+universal.zip
