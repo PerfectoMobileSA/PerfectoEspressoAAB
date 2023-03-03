@@ -33,7 +33,7 @@ pipeline {
         stage("Run the espresso tests on perfecto"){
             steps{
                 withCredentials([string(credentialsId: 'psToken', variable: 'securityToken')]) {
-                    sh '''./gradlew perfecto-android-inst -PconfigFileLocation=configFile.json -PsecurityToken=${securityToken} -PcloudURL=${cloudName}.perfectomobile.com -PjobName=${JOB_NAME} -PjobNumber=${BUILD_NUMBER}'''
+                    sh '''./gradlew perfecto-android-inst -PconfigFileLocation=configFile.json -PsecurityToken=${securityToken} -PcloudURL=''' + cloudName + ''' .perfectomobile.com -PjobName=${JOB_NAME} -PjobNumber=${BUILD_NUMBER}'''
                 }
             }
         }
