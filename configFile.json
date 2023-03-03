@@ -19,14 +19,14 @@
   "tags": [
     "espresso", "plugin"
   ],
-  "apkPath": "app/build/outputs/apk/debug/app-debug.apk",
+  "apkPath": "universal.apk",
   "testApkPath": "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
   "installationDetails" : {"preCleanUp" : "true"},
   "postExecution" : {"uninstall" : "false" },
   "debug": false,
   "failBuildOnFailure": true,
   "takeScreenshotOnTestFailure": true,
-  "shard": true,
+  "shard": false,
   "testTimeout" : 60000,
   "itmsServerUrl":"https://itms2-us.perfectomobile.com"
 }
